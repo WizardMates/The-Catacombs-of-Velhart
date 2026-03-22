@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TheCatacombsOfVelhart.Scripts.GameEnums.Data;
+using TheCatacombsOfVelhart.Scripts.Data.GameEnums;
 
-namespace TheCatacombsOfVelhart.Scripts.GameEnums.BaseObjects;
+namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
 
 public interface ICreature {
 	public float Hp { get; set; }

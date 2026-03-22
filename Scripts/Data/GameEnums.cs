@@ -1,4 +1,4 @@
-namespace TheCatacombsOfVelhart.Scripts.GameEnums.Data;
+namespace TheCatacombsOfVelhart.Scripts.Data.GameEnums;
 
 public enum AbilityType {
 	Damage,

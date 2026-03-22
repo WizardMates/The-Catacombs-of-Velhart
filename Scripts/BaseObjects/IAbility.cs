@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TheCatacombsOfVelhart.Scripts.GameEnums.BaseObjects;
+namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
 
 public interface IAbility {
 	public float Magnitude {get;set;}
