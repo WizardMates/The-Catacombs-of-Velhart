@@ -27,11 +27,14 @@ public partial class PlayerMovement : CharacterBody3D
 	private float _targetRotation; // Target rotation angle for rotation interpolation
 	private Rid _collisionRid; // Player rid (collision)
 	private Camera3D _camera3D;
+	private RayCast3D _rayCast3D;
+	
 	
 	public override void _Ready()
 	{
 		_collisionRid = GetNode<CollisionShape3D>("Collision").Shape.GetRid();
 		_camera3D = GetNode<Camera3D>("Camera3D");
+		_rayCast3D = GetNode<RayCast3D>("RayCast");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -114,30 +117,28 @@ public partial class PlayerMovement : CharacterBody3D
 	private void HandleInput()
 	{
 		// camera rotation to left
-		if (Input.IsActionJustPressed("camera_left"))  // Q
+		if (Input.IsActionPressed("camera_left"))  // Q
 		{
 			RotatePlayer(Mathf.Pi / 2); // +90 degrees
 		}
 		// camera rotation to right
-		if (Input.IsActionJustPressed("camera_right")) // E 
+		if (Input.IsActionPressed("camera_right")) // E 
 		{
 			RotatePlayer(-Mathf.Pi / 2); // -90 degrees
 		}
 		
 		// movement input
-		// Perhaps we should remove all directions but forward
-		Vector2 inputDir = Input.GetVector("left", "right", "forward", "back");
+		float forwardInput = Input.IsActionPressed("forward") ? -1.0f : 0.0f;
 
-		
-		// return  if there is no input direction
-		if (inputDir == Vector2.Zero) return;
-		
+		// return if there is no input direction
+		if (forwardInput == 0) return;
+
 		// Convert input direction to world global space 
-		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
-		direction = RoundToGridDirection(direction);
+		Vector3 direction = (Transform.Basis * new Vector3(0, 0, forwardInput)).Normalized();
+
 
 		Vector3 nextPosition = GlobalPosition + direction * GridSize;
-		if (CanMoveTo(nextPosition))
+		if (CanMoveToDirection())
 		{
 			// Store the current position as the starting point for the movement animation
 			_startPosition = GlobalPosition;
@@ -161,53 +162,12 @@ public partial class PlayerMovement : CharacterBody3D
 			_rotateTimer = 0f;
 		}
 	}
-	
-	// Snap input direction to one of four cardinal directions (up, down, left, right)
-	private Vector3 RoundToGridDirection(Vector3 direction)
+
+	// just checks if player can move to position.
+	private bool CanMoveToDirection()
 	{
-		// If X axis is larger than Z, move horizontally
-		if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Z))
-		{
-			return direction.X > 0 ? Vector3.Right : Vector3.Left;
-		}
-		
-		// If Z axis is above threshold, move vertically
-		if (Mathf.Abs(direction.Z) > 0.1f)
-		{
-			return direction.Z > 0 ? Vector3.Back : Vector3.Forward;
-		}
-		
-		// No input
-		return Vector3.Zero;
+		return !_rayCast3D.IsColliding();
 	}
-
-	// works fine but need to change later (looks hacky)
-	// make a sphere which participates in intersection. 0.3f is minimum for now
-	// (The player will be able to pass through the wall).
-	private bool CanMoveTo(Vector3 position)
-	{
-		// Get the physics space for collision detection
-		var spaceState = GetWorld3D().DirectSpaceState;
-		// Create a sphere collision query
-		var query = new PhysicsShapeQueryParameters3D();
-		query.Shape = new SphereShape3D { Radius = 0.3f };
-		
-		// Exclude player collision body from the check
-		query.Exclude.Add(_collisionRid);
-	
-		// Set the query position to the target location
-		var transform = Transform3D.Identity;
-		transform.Origin = position;
-		query.Transform = transform;
-	
-		var result = spaceState.IntersectShape(query);
-		
-		// True - No intersects, False - intersects
-		return result.Count == 0;
-	}
-
-
-	
 	
 }
 
