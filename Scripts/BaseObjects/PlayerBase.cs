@@ -23,7 +23,7 @@ public abstract class PlayerBase : ICreature {
 	public int Experience {
 		get => _experience;
 		set {
-			// if income experience amount is higher than current leven experience cap, then leveling up and spending experience to level up
+			// if income experience amount is higher than current level experience cap, then leveling up and spending experience to level up
 			int _new_experience = value;
 			int _experience_needed_to_level_up = GameConfig.ExperienceThresholds[Level];
 			if (_new_experience < _experience_needed_to_level_up) {
