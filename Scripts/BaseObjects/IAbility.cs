@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TheCatacombsOfVelhart.Scripts.Data.GameEnums;
 
 namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
 
@@ -8,10 +9,14 @@ public interface IAbility {
 	
 	public string Name {get;set;}
 	public string Description {get;set;}
+	
+	public AbilityType Type {get;set;}
+}
 
-	/// <summary>
-	/// function returns if ability used successfully or not.
-	/// If not - something is blocking using the ability
-	/// </summary>
-	bool Use(ICreature initiator, List<ICreature> targets);
+public interface ISelfCastAbility : IAbility {
+	public void Use(Creature initiator);
+}
+
+public interface ITargetedAbility : IAbility {
+	public void Use(Creature initiator, Creature target);
 }
