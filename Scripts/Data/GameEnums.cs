@@ -19,3 +19,17 @@ public enum PlayerClass {
 	Knight,
 	Cleric
 }
+
+public enum FightState
+{
+	PlayerTurn,
+	EnemyTurn,
+	Victory,
+	Defeat
+}
+
+public enum CreatureState
+{
+	Alive,
+	Dead
+}

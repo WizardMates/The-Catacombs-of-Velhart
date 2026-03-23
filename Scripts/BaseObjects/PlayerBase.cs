@@ -4,13 +4,15 @@ using TheCatacombsOfVelhart.Scripts.Data.GameConfig;
 
 namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
 
-public abstract class PlayerBase : ICreature {
+public abstract class PlayerBase : Creature {
 	public float Hp { get; set; }
 	public float MaxHp { get; set; }
 	public List<IAbility> Abilities { get; set; }
 	public Dictionary<DamageType, float> Defences { get; set; }
+	
+	public bool IsFigting { get; set; }
 
-	private int _level = 1; // Player always starts with level 1
+	private int _level;
 	public int Level {
 		get => _level;
 		set {
@@ -32,5 +34,18 @@ public abstract class PlayerBase : ICreature {
 		}
 	}
 
+	protected PlayerBase() {
+		Level = 1;
+		IsFigting = false;
+	}
+
 	protected abstract void LevelUp();
+
+	protected void EnterFight(Fight fight) {
+		IsFigting = true;
+	}
+	
+	protected void ExitFight(Fight fight) {
+		IsFigting = false;
+	}
 }
