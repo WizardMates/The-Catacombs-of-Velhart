@@ -1,0 +1,38 @@
+[gd_resource type="MeshLibrary" format=3 uid="uid://d22ni5ranefx"]
+
+[ext_resource type="Texture2D" uid="uid://dx1gxewhqoov4" path="res://Resources/Textures/Torment_Textures/True_Colour/str_metalgen4.png" id="1_j2nuf"]
+[ext_resource type="Texture2D" uid="uid://cl60y4ko07glu" path="res://Resources/Textures/Torment_Textures/True_Colour/str_metalgrbl3.png" id="2_g1m62"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1m62"]
+cull_mode = 2
+albedo_texture = ExtResource("1_j2nuf")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rwp5e"]
+material = SubResource("StandardMaterial3D_g1m62")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5bw7"]
+cull_mode = 2
+albedo_texture = ExtResource("2_g1m62")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mbt2c"]
+material = SubResource("StandardMaterial3D_j5bw7")
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g1m62"]
+size = Vector3(0.01, 2, 2)
+
+[resource]
+item/0/name = "stone floor"
+item/0/mesh = SubResource("PlaneMesh_rwp5e")
+item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/mesh_cast_shadow = 0
+item/0/shapes = []
+item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/navigation_layers = 1
+item/1/name = "Stone Wall"
+item/1/mesh = SubResource("PlaneMesh_mbt2c")
+item/1/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/mesh_cast_shadow = 0
+item/1/shapes = [SubResource("BoxShape3D_g1m62"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/1/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/navigation_layers = 1

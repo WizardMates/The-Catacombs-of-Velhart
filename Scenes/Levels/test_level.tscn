@@ -1,6 +1,157 @@
 [gd_scene format=3 uid="uid://dh35na0op2fgc"]
 
-[ext_resource type="Script" uid="uid://bcits0h1pjes1" path="res://Scripts/Levels/test_level.gd" id="1_7t06c"]
+[ext_resource type="Texture2D" uid="uid://dx1gxewhqoov4" path="res://Resources/Textures/Torment_Textures/True_Colour/str_metalgen4.png" id="2_k8g1k"]
+[ext_resource type="Texture2D" uid="uid://cl60y4ko07glu" path="res://Resources/Textures/Torment_Textures/True_Colour/str_metalgrbl3.png" id="3_2ytpj"]
+[ext_resource type="Texture2D" uid="uid://cfj3fjemm6q63" path="res://Resources/Textures/Torment_Textures/True_Colour/str_stoneflr1.png" id="4_x4x4f"]
+[ext_resource type="Texture2D" uid="uid://cw7ehvgwl3du2" path="res://Resources/Textures/Torment_Textures/True_Colour/str_metalgrbl5.png" id="5_l7ek2"]
+[ext_resource type="Texture2D" uid="uid://brwmokf4cjbib" path="res://Resources/Textures/Torment_Textures/True_Colour/str_stonebrk3.png" id="6_7rivk"]
+[ext_resource type="MeshLibrary" uid="uid://d22ni5ranefx" path="res://Resources/MeshLibrary/Level_Sewerage.tres" id="7_l7ek2"]
+[ext_resource type="Script" uid="uid://dg1ndpa6ob4dr" path="res://Scenes/Levels/torch.gd" id="7_x4x4f"]
+[ext_resource type="PackedScene" uid="uid://ctbkkbkuyc4da" path="res://Scenes/Objects/Player.tscn" id="8_l7ek2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ytpj"]
+cull_mode = 2
+albedo_texture = ExtResource("2_k8g1k")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_db73o"]
+material = SubResource("StandardMaterial3D_2ytpj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyk2w"]
+cull_mode = 2
+albedo_texture = ExtResource("3_2ytpj")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mvu5i"]
+material = SubResource("StandardMaterial3D_hyk2w")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_db73o"]
+cull_mode = 2
+albedo_texture = ExtResource("3_2ytpj")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_npfmg"]
+material = SubResource("StandardMaterial3D_db73o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xxcax"]
+cull_mode = 2
+albedo_texture = ExtResource("4_x4x4f")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sufl4"]
+material = SubResource("StandardMaterial3D_xxcax")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkdv3"]
+cull_mode = 2
+albedo_texture = ExtResource("5_l7ek2")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xnpcw"]
+material = SubResource("StandardMaterial3D_rkdv3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3bggx"]
+cull_mode = 2
+albedo_texture = ExtResource("6_7rivk")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ch0ib"]
+material = SubResource("StandardMaterial3D_3bggx")
+
+[sub_resource type="Environment" id="Environment_k8g1k"]
+ambient_light_energy = 0.3
+tonemap_mode = 3
+ssao_radius = 3.0
+ssao_power = 1.5528973
+ssil_enabled = true
 
 [node name="TestLevel" type="Node3D" unique_id=979491757]
-script = ExtResource("1_7t06c")
+
+[node name="Floors" type="GridMap" parent="." unique_id=580053293]
+mesh_library = ExtResource("7_l7ek2")
+data = {
+"cells": PackedInt32Array(0, 1, 1179648, 0, 0, 1179648, 0, 65533, 1179648, 65535, 65533, 1179648, 65534, 65533, 1179648, 0, 65532, 1179648, 0, 65531, 1441792, 1, 65531, 1441792, 1, 65530, 1441792, 0, 65530, 1441792, 65535, 65531, 1441792, 65535, 65532, 1179648, 65534, 65532, 1441792, 0, 2, 1179648, 1, 1, 1441792, 2, 1, 1441792, 3, 0, 1441792, 4, 0, 1441929, 5, 65535, 1441929, 6, 65535, 1441929, 7, 65534, 1441929, 8, 65534, 1441929, 9, 65533, 1441929, 10, 65533, 1441929, 11, 65532, 1441929, 12, 65531, 1441929, 13, 65531, 1441929, 14, 65530, 1441929, 15, 65529, 1441929, 21, 65525, 1441929, 23, 65524, 1441929, 25, 65522, 1441929, 27, 65513, 1441929, 26, 65514, 1441929, 23, 65515, 1441929, 22, 65516, 1441929, 20, 65517, 1441929, 14, 65520, 1441929, 13, 65521, 1441929, 12, 65522, 1441929, 11, 65522, 1441929, 10, 65523, 1441929, 9, 65524, 1441929, 8, 65524, 1441929, 7, 65525, 1441929, 6, 65526, 1441929, 5, 65526, 1441929, 4, 65527, 1441929, 4, 65528, 1441929, 3, 65528, 1441929, 3, 65529, 1441929, 2, 65529, 1441929, 2, 65530, 1441792, 1, 65534, 1441792, 2, 65533, 1441792, 2, 65532, 1441792, 2, 65531, 1441792, 2, 65528, 1441929, 2, 65527, 1441929, 3, 65527, 1441929, 5, 65527, 1441929, 6, 65527, 1441929, 7, 65527, 1441929, 8, 65526, 1441929, 9, 65526, 1441929, 10, 65525, 1441929, 11, 65525, 1441929, 12, 65524, 1441929, 13, 65524, 1441929, 14, 65523, 1441929, 18, 65523, 1441929, 17, 65530, 1441929, 15, 65531, 1441929, 14, 65531, 1441929, 13, 65532, 1441929, 12, 65533, 1441929, 11, 65533, 1441929, 10, 65534, 1441929, 9, 65534, 1441929, 8, 65535, 1441929, 7, 65535, 1441929, 5, 0, 1441929, 3, 1, 1441792, 1, 2, 1441792, 0, 3, 1179648, 0, 4, 1441792, 0, 5, 1441792, 65535, 4, 1441792, 65535, 3, 1179648, 1, 0, 1441792, 2, 65535, 1441792, 2, 0, 1441792, 65534, 65535, 1179648, 65534, 1, 1179648, 65535, 1, 1179648, 65535, 0, 1179648, 65535, 65535, 1179648, 65534, 0, 1179648, 65534, 65534, 1179648, 65535, 65534, 1179648, 65533, 65533, 1179648, 65533, 65534, 1179648, 65533, 65535, 1179648, 65533, 0, 1179648, 65533, 1, 1179648, 65533, 2, 1179648, 65534, 2, 1179648, 65534, 3, 1179648, 65535, 2, 1179648, 65533, 3, 1179648, 0, 65535, 1179648, 0, 65534, 1179648, 65533, 65532, 1441792, 65533, 4, 1441792, 65534, 4, 1441792, 65533, 5, 1441792, 1, 4, 1441792, 1, 3, 1441792, 1, 65535, 1441792, 1, 65533, 1441792, 1, 65532, 1441792, 65534, 65531, 1441792, 65533, 65531, 1441792, 65532, 65531, 1441792, 65532, 65532, 1441792, 65532, 65533, 1441792, 65532, 65534, 1441792, 65532, 65535, 1441792, 65532, 0, 1441792, 65532, 1, 1441792, 65532, 2, 1441792, 65532, 3, 1441792, 65532, 4, 1441792, 1, 5, 1441792, 65535, 5, 1441792, 65534, 5, 1441792, 65531, 5, 1441792, 65532, 5, 1441792, 65531, 4, 1441792, 65531, 2, 1441792, 65531, 3, 1441792, 65531, 1, 1441792, 65531, 0, 1441792, 65531, 65535, 1441792, 65531, 65534, 1441792, 65531, 65533, 1441792, 65531, 65532, 1441792, 65531, 65531, 1441792, 65531, 65530, 1441792, 65532, 65530, 1441792, 65533, 65530, 1441792, 65534, 65530, 1441792, 65535, 65530, 1441792, 3, 65533, 1441792, 3, 65534, 1441792, 2, 65534, 1441792, 3, 65535, 1441792, 3, 2, 1441792, 2, 2, 1441792, 2, 3, 1441792, 2, 4, 1441792, 2, 5, 1441792)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Map" type="Node3D" parent="." unique_id=596775171]
+visible = false
+
+[node name="Floor_Stone_1" type="MeshInstance3D" parent="Map" unique_id=817790484]
+mesh = SubResource("PlaneMesh_db73o")
+
+[node name="Floor_Stone_2" type="MeshInstance3D" parent="Map" unique_id=1388046186]
+mesh = SubResource("PlaneMesh_mvu5i")
+
+[node name="Wall_Stone_1" type="MeshInstance3D" parent="Map" unique_id=1532858013]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_npfmg")
+
+[node name="Wall_Stone_2" type="MeshInstance3D" parent="Map" unique_id=1377988558]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_sufl4")
+
+[node name="Wall_Stone_3" type="MeshInstance3D" parent="Map" unique_id=395409441]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_xnpcw")
+
+[node name="Wall_Stone_4" type="MeshInstance3D" parent="Map" unique_id=33047361]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ch0ib")
+
+[node name="Walls" type="GridMap" parent="." unique_id=1365280639]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh_library = ExtResource("7_l7ek2")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65527, 9, 1, 65527, 7, 1, 65527, 5, 655361, 65527, 3, 655361, 65528, 9, 917505, 65528, 7, 917505, 65528, 5, 917505, 65528, 3, 786433, 65528, 1, 786433, 65528, 65535, 786433, 65528, 65533, 786433, 65528, 65531, 786433, 65528, 65529, 786433, 65528, 65527, 786433, 65529, 65526, 1376257, 65531, 65526, 1376257, 65533, 65526, 1376257, 65535, 65526, 1376257, 1, 65526, 1376257, 3, 65526, 1376257, 4, 65527, 393217, 4, 65529, 393217, 4, 65531, 393217, 4, 65533, 393217, 4, 65535, 393217, 4, 1, 393217, 4, 3, 393217, 4, 5, 393217, 4, 7, 393217, 4, 9, 393217, 3, 10, 1114113, 1, 10, 1114113, 65535, 10, 1114113, 65533, 10, 1114113, 65531, 10, 1114113, 65529, 10, 1114113, 0, 65527, 655361, 0, 65529, 655361, 0, 65534, 655361, 0, 0, 655361, 0, 2, 655361, 0, 4, 655361, 0, 7, 655361, 0, 9, 655361, 1, 65530, 1048577, 3, 65530, 1048577, 1, 65533, 1048577, 3, 65533, 1048577)
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1199444899]
+environment = SubResource("Environment_k8g1k")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=841914954]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.423409, 1.5233936, -7.5752244)
+light_color = Color(0.7882353, 0.47843137, 0.24705882, 1)
+light_energy = 2.0
+distance_fade_enabled = true
+omni_range = 15.0
+script = ExtResource("7_x4x4f")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=755526766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.423409, 1.5233936, 0.901999)
+light_color = Color(0.7882353, 0.47843137, 0.24705882, 1)
+light_energy = 2.0
+distance_fade_enabled = true
+omni_range = 15.0
+script = ExtResource("7_x4x4f")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=966487298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0743294, 2.5233936, -3.3998601)
+light_color = Color(0.7882353, 0.47843137, 0.24705882, 1)
+light_energy = 2.0
+distance_fade_enabled = true
+omni_range = 15.0
+script = ExtResource("7_x4x4f")
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1365809070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0379055, 1.5233936, 5.006933)
+light_color = Color(0.7882353, 0.47843137, 0.24705882, 1)
+light_energy = 2.0
+distance_fade_enabled = true
+omni_range = 15.0
+script = ExtResource("7_x4x4f")
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="." unique_id=572651886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0300195, 1.5233936, 7.615177)
+light_color = Color(0.7882353, 0.47843137, 0.24705882, 1)
+light_energy = 2.0
+distance_fade_enabled = true
+omni_range = 15.0
+script = ExtResource("7_x4x4f")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=254860551]
+transform = Transform3D(0.5328763, 0, 0.84619313, 0, 1, 0, -0.84619313, 0, 0.5328763, -1.0024567, 2.1491017, -5.0855274)
+
+[node name="Player" parent="." unique_id=319120654 instance=ExtResource("8_l7ek2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2323143, 1.5457671, 5.719886)
+
+[node name="Roofs" type="GridMap" parent="." unique_id=770559290]
+mesh_library = ExtResource("7_l7ek2")
+data = {
+"cells": PackedInt32Array(131069, 2, 1048576, 131068, 2, 1048576, 131068, 3, 1048576, 131069, 3, 1048576, 131069, 4, 1048576, 131068, 4, 1048576, 131068, 5, 1048576, 131067, 5, 1048576, 131067, 4, 1048576, 131067, 3, 1048576, 131067, 2, 1048576, 131066, 2, 1048576, 131066, 1, 1048576, 131066, 0, 1048576, 131067, 0, 1048576, 131068, 0, 1048576, 131068, 1, 1048576, 131069, 1, 1048576, 131067, 65535, 1048576, 131067, 65534, 1048576, 131067, 65533, 1048576, 131066, 65533, 1048576, 131066, 65534, 1048576, 131066, 65535, 1048576, 131067, 1, 1048576, 131069, 5, 1048576, 131070, 5, 1048576, 131071, 5, 1048576, 131071, 4, 1048576, 131069, 0, 1048576, 131069, 65535, 1048576, 131069, 65534, 1048576, 131069, 65533, 1048576, 131069, 65532, 1048576, 131069, 65531, 1048576, 131069, 65530, 1048576, 131068, 65530, 1048576, 131068, 65531, 1048576, 131068, 65532, 1048576, 131068, 65533, 1048576, 131068, 65534, 1048576, 131068, 65535, 1048576, 131066, 65532, 1048576, 131066, 65531, 1048576, 131070, 4, 1048576, 131070, 3, 1048576, 131070, 2, 1048576, 131070, 1, 1048576, 131070, 0, 1048576, 131070, 65535, 1048576, 131070, 65534, 1048576, 131070, 65533, 1048576, 131070, 65532, 1048576, 131070, 65531, 1048576, 131071, 65532, 1048576, 131071, 65533, 1048576, 131071, 65534, 1048576, 131071, 65535, 1048576, 131071, 0, 1048576, 131071, 1, 1048576, 131071, 2, 1048576, 131071, 3, 1048576, 65536, 5, 1048576, 65536, 4, 1048576, 65536, 3, 1048576, 65536, 2, 1048576, 65536, 1, 1048576, 65536, 0, 1048576, 65536, 65535, 1048576, 65536, 65534, 1048576, 65536, 65533, 1048576, 65536, 65532, 1048576, 65537, 65531, 1048576, 65537, 65532, 1048576, 65537, 65533, 1048576, 65537, 65534, 1048576, 65537, 65535, 1048576, 65537, 0, 1048576, 65537, 1, 1048576, 65537, 2, 1048576, 65537, 3, 1048576, 65537, 4, 1048576, 65537, 5, 1048576, 65538, 3, 1048576, 65538, 2, 1048576, 65538, 1, 1048576, 65538, 0, 1048576, 65538, 65535, 1048576, 65538, 65534, 1048576, 65538, 65533, 1048576, 65538, 65532, 1048576, 65536, 65531, 1048576, 65536, 65530, 1048576, 131071, 65530, 1048576, 131070, 65530, 1048576, 131071, 65531, 1048576, 65538, 65531, 1048576, 65538, 5, 1048576, 65537, 65530, 1048576, 65537, 65529, 1048576, 65536, 65529, 1048576, 65538, 65530, 1048576, 65538, 4, 1048576, 131067, 65532, 1048576, 131067, 65531, 1048576, 131067, 65530, 1048576, 131066, 65530, 1048576, 131066, 3, 1048576, 131066, 4, 1048576, 131066, 5, 1048576)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)
