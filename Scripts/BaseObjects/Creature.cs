@@ -19,21 +19,25 @@ public abstract class Creature {
 	public List<IAbility> Abilities { get; set; }
 	
 	/// <summary>
-	/// Dictionary of Defences creature has.
+	/// Dictionary of Defenses creature has.
 	/// Damage Type - Coefficient
 	/// Final damage formula: basedamage * ( 1 - Coefficient )
 	/// </summary>
-	public Dictionary<DamageType, float> Defences { get; set; }
+	public Dictionary<DamageType, float> Defenses { get; set; }
 
-	public CreatureState State { get; set; } = CreatureState.Alive;
+	public CreatureState State { get; set; }
+
+	protected Creature() {
+		State = CreatureState.Alive;
+	}
 
 	public void TakeDamage(float damage, DamageType damageType, Creature initiator) {
-		float damage_after_defence = damage * (1.0f - Defences[damageType]);
+		float damage_after_defence = damage * (1.0f - Defenses[damageType]);
 		
 		Hp -= damage_after_defence;
 	}
 
-	protected void Die() {
+	private void Die() {
 		State = CreatureState.Dead;
 	}
 }

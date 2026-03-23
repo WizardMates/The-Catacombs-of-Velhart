@@ -21,6 +21,11 @@ public abstract class PlayerBase : Creature {
 		}
 	}
 
+	/// <summary>
+	/// Magic Circle number : available uses of the Circle in the current turn
+	/// </summary>
+	public Dictionary<int, int> MagicCircleFreeUses { get; set; }
+	
 	private int _experience;
 	public int Experience {
 		get => _experience;

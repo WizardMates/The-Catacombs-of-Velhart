@@ -23,7 +23,7 @@ public enum PlayerClass {
 public enum FightState
 {
 	PlayerTurn,
-	EnemyTurn,
+	EnemiesTurn,
 	Victory,
 	Defeat
 }

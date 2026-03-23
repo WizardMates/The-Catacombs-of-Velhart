@@ -10,16 +10,17 @@ public class Mob : Creature {
 	/// List of abilities the mob is wanting to use in the current turn
 	/// This is needed for showing the player the mob abilities queue so the player can build a strategy for the current turn
 	/// </summary>
-	public List<IAbility> AbilitiesQueue;
+	public List<IAbility> NextTurnAbilitiesQueue;
 	
-	public void TakeTurn(Fight fight) {
+	public virtual void TakeTurn(Fight fight) {
 		// placeholder functional for future editing
 		// mob chooses random ability from Abilities list and uses it on all Players
 		IAbility randomAbility = Abilities[new Random().Next(0, Abilities.Count)];
 		if (randomAbility is ISelfCastAbility selfCastAbility) {
-			foreach (PlayerBase player in fight.PlayerTeam) {
-				selfCastAbility.Use(player);
-			}
+			selfCastAbility.Use(this);
+		}
+		else if (randomAbility is ITargetedAbility targetedAbility) {
+			targetedAbility.Use(this, fight.Player);
 		}
 	}
 }
