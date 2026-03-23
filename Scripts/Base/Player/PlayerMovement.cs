@@ -15,17 +15,30 @@ public partial class PlayerMovement : CharacterBody3D
 	public const float RotateTime = 0.5f; // How much time we need to rotate player (camera)
 	public const float BobberAmplitude = 0.01f; // Camera Shaking
 	
+	//====MOVEMENT BLOCK START====
 	private Vector3 _startPosition; // Starting position for movement interpolation
 	private Vector3 _targetPosition; // Target position for movement interpolation
 	private float _moveTimer; // Timer for tracking movement progress
 	private float _delayTimer; // Timer for tracking delay between moves
-	private bool _isMoving; // Indicating if the player is currently moving
-	private bool _isDelaying; // Indicating if the player is in delay state after moving
-	private bool _isRotating; // Indicating if the player is currently rotating
-	private float _rotateTimer; // Timer for tracking rotation progress
-	private float _startRotation; // Starting rotation angle for rotation interpolation
-	private float _targetRotation; // Target rotation angle for rotation interpolation
+	//====MOVEMENT BLOCK END======
+	
+	//====ROTATING BLOCK START====
+	private float _rotateTimer;
+	private float _startRotation;
+	private float _targetRotation;
+	//====ROTATING BLOCK END=====
+
+	private enum PlayerMovementState {
+		Moving,
+		Rotating,
+		Delaying,
+		Idling
+	}
+	
+	private PlayerMovementState _playerMovementState;
+	
 	private Rid _collisionRid; // Player rid (collision)
+	
 	private Camera3D _camera3D;
 	private RayCast3D _rayCast3D;
 	
@@ -35,34 +48,34 @@ public partial class PlayerMovement : CharacterBody3D
 		_collisionRid = GetNode<CollisionShape3D>("Collision").Shape.GetRid();
 		_camera3D = GetNode<Camera3D>("Camera3D");
 		_rayCast3D = GetNode<RayCast3D>("RayCast");
+
+		_playerMovementState = PlayerMovementState.Idling;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// If player currently in move?
-		if (_isMoving)
-		{
-			// Increment movement timer by delta time
-			_moveTimer += (float)delta;
-			// Calculate movement progress from 0 to 1
-			float progress = Mathf.Clamp(_moveTimer / MoveTime, 0f, 1f);
-			
-			// Apply ease-out quadratic function for smooth deceleration
-			float easeProgress = 1f - Mathf.Pow(1f - progress, 2f);
-			GlobalPosition = _startPosition.Lerp(_targetPosition, easeProgress);
 
-			
-			// Apply camera bobbing effect during movement (shaking)
-			float bobble = Mathf.Sin(_moveTimer * 15f) * BobberAmplitude; // how strength is bobbled
-			_camera3D.GlobalRotation = new Vector3(bobble * 0.1f, _camera3D.GlobalRotation.Y, bobble);
+		// If player currently in move?
+		switch (_playerMovementState) {
+			case PlayerMovementState.Moving: {
+				// Increment movement timer by delta time
+				_moveTimer += (float)delta;
+				// Calculate movement progress from 0 to 1
+				float progress = Mathf.Clamp(_moveTimer / MoveTime, 0f, 1f);
+
+				// Apply ease-out quadratic function for smooth deceleration
+				float easeProgress = 1f - Mathf.Pow(1f - progress, 2f);
+				GlobalPosition = _startPosition.Lerp(_targetPosition, easeProgress);
+
+				// Apply camera bobbing effect during movement (shaking)
+				float bobble = Mathf.Sin(_moveTimer * 15f) * BobberAmplitude; // how strength is bobbled
+				_camera3D.GlobalRotation = new Vector3(bobble * 0.1f, _camera3D.GlobalRotation.Y, bobble);
 
 				// can't be more than 1 (because clamp), but it's float.
 				// Check if movement animation is complete
-				if (progress >= 1.0f)
-				{
+				if (progress >= 1.0f) {
 					// Stop movement and start input delay (cooldown between movement (see const))
-					_isMoving = false;
-					_isDelaying = true;
+					_playerMovementState = PlayerMovementState.Delaying;
 					_delayTimer = 0f;
 					// Set final position to avoid  errors
 					GlobalPosition = _targetPosition;
@@ -70,46 +83,47 @@ public partial class PlayerMovement : CharacterBody3D
 					_camera3D.GlobalRotation = new Vector3(0, _camera3D.GlobalRotation.Y, 0);
 				}
 
-			
-		}
-		// Wait for cooldown before allowing next movement
-		else if (_isDelaying)
-		{
-			_delayTimer += (float)delta;
-			if (_delayTimer >= MoveDelay)
-			{
-				_isDelaying = false;
+				break;
 			}
-		}
-		// Wait for cooldown before allowing next rotating
-		else if (_isRotating)
-		{
-			// Increment the rotation timer by the elapsed time in seconds
-			_rotateTimer += (float)delta;
-			
-			// Calculate animation progress from 0 to 1
-			float progress = Mathf.Clamp(_rotateTimer / RotateTime, 0f, 1f);
-			float easeProgress = 1f - Mathf.Pow(1f - progress, 2f);
-			
-			// Interpolate between the start and target rotation angles
-			float currentRotation = Mathf.Lerp(_startRotation, _targetRotation, easeProgress);
-			
-			// rotate by Y axis
-			GlobalRotation = new Vector3(GlobalRotation.X, currentRotation, GlobalRotation.Z);
 
-			// Check if the animation has completed ( can't be more than 1f)
-			if (progress >= 1.0f)
-			{
-				_isRotating = false;
-				
-				// Target will be reached in any case
-				GlobalRotation = new Vector3(GlobalRotation.X, _targetRotation, GlobalRotation.Z);
+			// Wait for cooldown before allowing next rotating
+			case PlayerMovementState.Rotating: {
+				// Increment the rotation timer by the elapsed time in seconds
+				_rotateTimer += (float)delta;
+
+				// Calculate animation progress from 0 to 1
+				float progress = Mathf.Clamp(_rotateTimer / RotateTime, 0f, 1f);
+				float easeProgress = 1f - Mathf.Pow(1f - progress, 2f);
+
+				// Interpolate between the start and target rotation angles
+				float currentRotation = Mathf.Lerp(_startRotation, _targetRotation, easeProgress);
+
+				// rotate by Y axis
+				GlobalRotation = new Vector3(GlobalRotation.X, currentRotation, GlobalRotation.Z);
+
+				// Check if the animation has completed ( can't be more than 1f)
+				if (progress >= 1.0f) {
+					_playerMovementState = PlayerMovementState.Idling;
+
+					// Target will be reached in any case
+					GlobalRotation = new Vector3(GlobalRotation.X, _targetRotation, GlobalRotation.Z);
+				}
+
+				break;
 			}
-		}
 
-		else
-		{
-			HandleInput(); // Main input method. We accept inputs from  player only when they are completely stay.
+			// Wait for cooldown before allowing next movement
+			case PlayerMovementState.Delaying: {
+				_delayTimer += (float)delta;
+				if (_delayTimer >= MoveDelay) {
+					_playerMovementState = PlayerMovementState.Idling;
+				}
+
+				break;
+			}
+			case PlayerMovementState.Idling:
+				HandleInput(); // Main input method. We accept inputs from  player only when they are completely stay.
+				break;
 		}
 	}
 
@@ -145,7 +159,7 @@ public partial class PlayerMovement : CharacterBody3D
 			// Set the target position for the movement animation
 			_targetPosition = nextPosition;
 			// Enable the movement
-			_isMoving = true;
+			_playerMovementState =  PlayerMovementState.Moving;
 			// Reset the movement timer
 			_moveTimer = 0f;
 		}
@@ -154,11 +168,11 @@ public partial class PlayerMovement : CharacterBody3D
 	// Technically, it is not the camera that rotates, but the player (along the Y-axis).
 	private void RotatePlayer(float angle)
 	{
-		if (!_isRotating && !_isMoving && !_isDelaying)
+		if (_playerMovementState == PlayerMovementState.Idling)
 		{
 			_startRotation = GlobalRotation.Y;
 			_targetRotation = _startRotation + angle;
-			_isRotating = true;
+			_playerMovementState = PlayerMovementState.Rotating;
 			_rotateTimer = 0f;
 		}
 	}
