@@ -8,12 +8,12 @@ public static class EventBus
 {
     private static readonly List<IHandler> Handlers = new();
 
-    // Raise new event (somewhere in code)
     /// <summary>
-    /// Raise(new EventType(data))
+    /// Publishes an event to all registered handlers in priority order.
+    /// If any handler cancels the event, further processing is stopped.
     /// </summary>
-    /// <param name="e"></param>
-    /// <typeparam name="TEvent"></typeparam>
+    /// <param name="e">The event instance to be processed</param>
+    /// <typeparam name="TEvent">The event type, must inherit from Event class</typeparam>
     public static void Raise<TEvent>(TEvent e) where TEvent : Event
     {
         // Iterate through all handlers:
@@ -21,7 +21,7 @@ public static class EventBus
         // 2. Sort them by priority (lower value = executed earlier)
         foreach (var handler in Handlers
                      .Where(h => h.CanHandle(typeof(TEvent)))
-                     .OrderBy(h => h.Priority))
+                     .OrderByDescending(h => h.Priority))
         {
             // Invoke the handler with the event instance
             handler.Handle(e);
@@ -33,52 +33,12 @@ public static class EventBus
         }
     }
     
-    // Subscribe to this event (somewhere in code)
-    /// EventBus.Subscribe[EventType](e => Function/lambda, HandlerPriority)
+    // Registers a handler for a specific event type in the EventBus.
+    // The handler will be invoked when the event is Raise.
+    // Priority determines the order in which handlers are executed.
     public static void Subscribe<TEvent>(Action<TEvent> handler, HandlerPriority priority)
         where TEvent : Event
     {
         Handlers.Add(new Handler<TEvent>(handler, priority));
     }
-}
-
-public enum HandlerPriority
-{
-    Sensor = 0, // lowest priority
-    Low = 1,
-    Medium = 2,
-    High = 3,
-    VeryHigh = 4, // highest priority
-}
-
-public abstract class Event(bool cancelled = false)
-{
-    // ReSharper disable once FieldCanBeMadeReadOnly.Global
-    public bool Canceled = cancelled;
-}
-
-public interface IHandler
-{
-    HandlerPriority Priority { get; }
-    bool CanHandle(Type type);
-    void Handle(Event e);
-}
-
-// stores handler function and its priority
-public class Handler<TEvent>(Action<TEvent> handler, HandlerPriority priority) : IHandler
-    where TEvent : Event
-{
-    // The actual callback that will be executed when the event is raised
-
-    // Priority of this handler
-    public HandlerPriority Priority { get; } = priority;
-    
-
-    // Checks if this handler can process the given event type
-    // Returns true if TEvent is the same type or a base type of 'type'
-    public bool CanHandle(Type type) => typeof(TEvent).IsAssignableFrom(type);
-
-    // Executes the handler
-    // Casts base Event to the specific TEvent type before invoking
-    public void Handle(Event e) => handler((TEvent)e);
 }
