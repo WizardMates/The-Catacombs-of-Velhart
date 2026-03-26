@@ -24,8 +24,7 @@ public static class EventBus
     /// </summary>
     /// <param name="e">The event instance to be published.</param>
     /// <typeparam name="TEvent">The event type, must inherit from <c>Event</c>.</typeparam>
-    public static void Raise<TEvent>(TEvent e) where TEvent : Event
-    {
+    public static void Raise<TEvent>(TEvent e) where TEvent : Event {
         foreach (var handler in Handlers[typeof(TEvent)]) {
             handler.Handle(e);
         }
@@ -40,10 +39,24 @@ public static class EventBus
     /// <param name="priority">Determines execution order relative to other handlers.</param>
     /// <typeparam name="TEvent">The event type to subscribe to, must inherit from <c>Event</c>.</typeparam>
     public static void Subscribe<TEvent>(Action<TEvent> handler, HandlerPriority priority)
-        where TEvent : Event
+        where TEvent : Event 
     {
         Handlers.TryAdd(typeof(TEvent), new List<IHandler>()); // if Handlers dictionary doesn't have targeted key - TryAdd creates it
         Handlers[typeof(TEvent)].Add(new Handler<TEvent>(handler, priority)); // "subscribes" the handler to the event type
         Handlers[typeof(TEvent)] = Handlers[typeof(TEvent)].OrderByDescending(h => h.Priority).ToList(); // after the subscribing sorting list of handlers according to their priority
+    }
+
+    /// <summary>
+    /// Unsubscribes a previously registered handler from the specified event type.
+    /// Does nothing if the handler is not found.
+    /// </summary>
+    /// <param name="handler">The callback to unsubscribe.</param>
+    /// <typeparam name="TEvent">The event type to unsubscribe from.</typeparam>
+    public static void Unsubscribe<TEvent>(Action<TEvent> handler)
+        where TEvent : Event 
+    {
+        if (!Handlers.TryGetValue(typeof(TEvent), out var handlers)) return;
+
+        handlers.RemoveAll(h => h.IsOwnedBy(handler));
     }
 }

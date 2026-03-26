@@ -7,16 +7,27 @@ namespace TheCatacombsOfVelhart.Scripts.Eventbus;
 /// Used internally by <c>EventBus</c> to store and invoke subscribed handlers.
 /// </summary>
 /// <typeparam name="TEvent">The event type this handler is bound to, must inherit from <c>Event</c>.</typeparam>
-public class Handler<TEvent>(Action<TEvent> handler, HandlerPriority priority) : IHandler
+public class Handler<TEvent>(Action<TEvent> callback, HandlerPriority priority) : IHandler
     where TEvent : Event
 {
-    // The actual callback that will be executed when the event is raised
-
     /// <summary>
     /// Priority of the handler.
     /// </summary>
     public HandlerPriority Priority { get; } = priority;
 
+    /// <summary>
+    /// The callback delegate associated with this handler.
+    /// Invoked when a matching event is processed.
+    /// </summary>
+    private Action<TEvent> Callback { get; } = callback;
+
+    /// <summary>
+    /// Checks whether this handler is associated with the specified callback instance.
+    /// </summary>
+    /// <param name="callback">The callback instance to compare against.</param>
+    /// <returns>True if the stored callback matches the provided instance; otherwise false.</returns>
+    public bool IsOwnedBy(object callback) => Callback.Equals(callback);
+    
     /// <summary>
     /// Checks if this handler can process the given event type.
     /// </summary>
@@ -30,5 +41,5 @@ public class Handler<TEvent>(Action<TEvent> handler, HandlerPriority priority) :
     /// Does nothing if the callback is null.
     /// </summary>
     /// <param name="e">The event instance to pass to the callback.</param>
-    public void Handle(Event e) => handler?.Invoke((TEvent)e);
+    public void Handle(Event e) => Callback?.Invoke((TEvent)e);
 }
