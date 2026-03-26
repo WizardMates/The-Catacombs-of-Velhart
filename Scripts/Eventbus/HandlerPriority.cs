@@ -1,7 +1,5 @@
 ﻿namespace TheCatacombsOfVelhart.Scripts.Eventbus;
 
-
-
 public enum HandlerPriority
 {
     Sensor = 0, // lowest priority
