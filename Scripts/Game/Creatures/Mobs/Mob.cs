@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using TheCatacombsOfVelhart.Scripts.Core;
+using TheCatacombsOfVelhart.Scripts.Game.Abilities;
 
-namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
+namespace TheCatacombsOfVelhart.Scripts.Game.Creatures.Mobs;
 
 public class Mob : Creature {
 

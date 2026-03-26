@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using TheCatacombsOfVelhart.Scripts.Data.GameEnums;
+using TheCatacombsOfVelhart.Scripts.Core.Data;
+using TheCatacombsOfVelhart.Scripts.Game.Abilities;
 
-namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
+namespace TheCatacombsOfVelhart.Scripts.Game.Creatures;
 
 public abstract class Creature {
 	

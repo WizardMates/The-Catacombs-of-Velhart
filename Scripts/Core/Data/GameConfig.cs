@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TheCatacombsOfVelhart.Scripts.Data.GameConfig;
+namespace TheCatacombsOfVelhart.Scripts.Core.Data;
 
 public static class GameConfig {
 	

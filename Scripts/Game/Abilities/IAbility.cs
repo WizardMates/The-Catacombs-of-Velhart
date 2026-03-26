@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using TheCatacombsOfVelhart.Scripts.Data.GameEnums;
+using TheCatacombsOfVelhart.Scripts.Core.Data;
+using TheCatacombsOfVelhart.Scripts.Game.Creatures;
 
-namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
+namespace TheCatacombsOfVelhart.Scripts.Game.Abilities;
 
 public interface IAbility {
 	public float Magnitude {get;set;}

@@ -1,4 +1,4 @@
-﻿namespace TheCatacombsOfVelhart.Scripts.Eventbus.Events;
+﻿namespace TheCatacombsOfVelhart.Scripts.Core.Events;
 
 public class TestEvent(string data) : Event
 {

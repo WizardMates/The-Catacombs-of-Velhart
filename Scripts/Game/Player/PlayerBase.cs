@@ -1,8 +1,10 @@
 using System.Collections.Generic;
-using TheCatacombsOfVelhart.Scripts.Data.GameEnums;
-using TheCatacombsOfVelhart.Scripts.Data.GameConfig;
+using TheCatacombsOfVelhart.Scripts.Core;
+using TheCatacombsOfVelhart.Scripts.Core.Data;
+using TheCatacombsOfVelhart.Scripts.Game.Abilities;
+using TheCatacombsOfVelhart.Scripts.Game.Creatures;
 
-namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
+namespace TheCatacombsOfVelhart.Scripts.Game.Player;
 
 public abstract class PlayerBase : Creature {
 	public float Hp { get; set; }

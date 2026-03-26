@@ -1,6 +1,6 @@
 using System;
 
-namespace TheCatacombsOfVelhart.Scripts.Eventbus;
+namespace TheCatacombsOfVelhart.Scripts.Core;
 
 public interface IHandler
 {
