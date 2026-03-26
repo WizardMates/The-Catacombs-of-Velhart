@@ -15,6 +15,10 @@ run/main_scene="uid://dh35na0op2fgc"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://Resources/Sprites/Icons/icon.svg"
 
+[autoload]
+
+EventBusTestSystem="*uid://dmfiiej015jv0"
+
 [dotnet]
 
 project/assembly_name="the catacombs of velhart"
