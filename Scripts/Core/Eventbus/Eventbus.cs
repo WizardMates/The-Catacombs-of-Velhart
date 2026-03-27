@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TheCatacombsOfVelhart.Scripts.Eventbus;
+namespace TheCatacombsOfVelhart.Scripts.Core;
 
 /// <summary>
 /// Global event bus for decoupled communication between game systems.<br/>

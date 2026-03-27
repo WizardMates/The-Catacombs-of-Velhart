@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TheCatacombsOfVelhart.Scripts.Data.GameEnums;
+using TheCatacombsOfVelhart.Scripts.Core.Data;
+using TheCatacombsOfVelhart.Scripts.Game.Creatures.Mobs;
+using TheCatacombsOfVelhart.Scripts.Game.Player;
 
-namespace TheCatacombsOfVelhart.Scripts.BaseObjects;
+namespace TheCatacombsOfVelhart.Scripts.Core;
 
 /// <summary>
 /// <para>

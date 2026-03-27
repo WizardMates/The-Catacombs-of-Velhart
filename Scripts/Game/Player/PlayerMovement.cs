@@ -3,7 +3,7 @@ using Godot;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable InvertIf
 
-namespace TheCatacombsOfVelhart.Scripts.Base.Player;
+namespace TheCatacombsOfVelhart.Scripts.Game.Player;
 
 
 // It will most likely be split into several nodes and rewrite later on, once the main structure is complete.

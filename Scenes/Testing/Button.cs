@@ -1,5 +1,5 @@
-using TheCatacombsOfVelhart.Scripts.Eventbus;
-using TheCatacombsOfVelhart.Scripts.Eventbus.Events;
+using TheCatacombsOfVelhart.Scripts.Core;
+using TheCatacombsOfVelhart.Scripts.Core.Events;
 
 namespace TheCatacombsOfVelhart.Scenes.Testing;
 

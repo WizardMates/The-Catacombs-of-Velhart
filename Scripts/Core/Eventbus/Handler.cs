@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TheCatacombsOfVelhart.Scripts.Eventbus;
+namespace TheCatacombsOfVelhart.Scripts.Core;
 
 /// <summary>
 /// Wraps a callback function and binds it to a specific event type.<br/>
